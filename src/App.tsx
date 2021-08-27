@@ -1,17 +1,22 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { UserProvider } from './store/UserContext';
 
 const Home = lazy(() => import('./pages/Home'));
+const ChatRoom = lazy(() => import('./pages/ChatRoom'));
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Switch>
-          <Route exact path="/" component={Home} />
-        </Switch>
-      </Suspense>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Suspense fallback={''}>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/room" component={ChatRoom} />
+          </Switch>
+        </Suspense>
+      </BrowserRouter>
+    </UserProvider>
   );
 };
 
