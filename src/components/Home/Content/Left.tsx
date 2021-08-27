@@ -27,15 +27,12 @@ const Left = () => {
       const localStream = await webRTC.getLocalStream();
       setUserInfo((prev) => ({ ...prev, username, localStream }));
       history.push('/room');
-    } catch (error: unknown) {
+    } catch (error: any) {
       setIsClick(false);
-      if (error instanceof MediaStreamError) {
-        let err: MediaStreamError = error;
-        if (err.name === 'NotAllowedError')
-          alert(`${err.message}! 請給予攝影機與麥克風權限`);
-        if (err.name === 'NotFoundError')
-          alert(`${err.message}! 使用者無鏡頭設備，無法加入會議`);
-      }
+      if (error.name === 'NotAllowedError')
+        alert(`${error.message}! 請給予攝影機與麥克風權限`);
+      if (error.name === 'NotFoundError')
+        alert(`${error.message}! 使用者無鏡頭設備，無法加入會議`);
     }
   };
 
